@@ -1,4 +1,4 @@
-import Styled from 'styled-components';
+import Styled from "styled-components";
 
 const LogoComponent = Styled.img`
 width: 140px;
@@ -40,17 +40,22 @@ const ChooseCityLabel = Styled.span`
   font-weight: bold;
 `;
 
-const CityComponent = () => {
-    return (
-        <>
-            <LogoComponent src="/assets/animated/day.svg"></LogoComponent>
-            <ChooseCityLabel>Find Weather of your city</ChooseCityLabel>
-            <SearchBox>
-                <input placeholder='City'></input>
-                <button>Search</button>
-            </SearchBox>
-        </>
-    );
-}
+const CityComponent = (props) => {
+  const { updateCity,fetchWeather } = props;
+
+  return (
+    <>
+      <LogoComponent src="/assets/animated/day.svg"></LogoComponent>
+      <ChooseCityLabel>Find Weather of your city</ChooseCityLabel>
+      <SearchBox onSubmit={fetchWeather}>
+        <input
+          placeholder="City"
+          onChange={(e) => updateCity(e.target.value)}
+        ></input>
+        <button type="submit">Search</button>
+      </SearchBox>
+    </>
+  );
+};
 
 export default CityComponent;
