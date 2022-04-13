@@ -39,13 +39,18 @@ const ChooseCityLabel = Styled.span`
   font-size: 18px;
   font-weight: bold;
 `;
+const ErrorLabel = Styled.span`
+  color: red;
+  margin: 0px auto;
+`;
 
 const CityComponent = (props) => {
-  const { updateCity,fetchWeather } = props;
+  const { updateCity,fetchWeather, errorMessage } = props;
+
 
   return (
     <>
-      <LogoComponent src="/assets/animated/day.svg"></LogoComponent>
+      <LogoComponent src="/assets/gifs/weather.gif"></LogoComponent>
       <ChooseCityLabel>Find Weather of your city</ChooseCityLabel>
       <SearchBox onSubmit={fetchWeather}>
         <input
@@ -54,6 +59,7 @@ const CityComponent = (props) => {
         ></input>
         <button type="submit">Search</button>
       </SearchBox>
+      <ErrorLabel>{errorMessage}</ErrorLabel>
     </>
   );
 };

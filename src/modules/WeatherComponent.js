@@ -1,11 +1,11 @@
 import Styled from "styled-components";
 
 export const WeatherInfoIcons = {
-  sunset: "/assets/animated/weather_sunset.svg",
-  sunrise: "/assets/animated/weather_sunset.svg",
-  humidity: "/assets/animated/weather.svg",
-  wind: "/assets/animated/cloudy.svg",
-  pressure: "/assets/animated/cloudy-day-1.svg",
+  sunset: "/assets/gifs/sunset.gif",
+  sunrise: "/assets/gifs/sunrise.gif",
+  humidity: "/assets/gifs/humidity.gif",
+  wind: "/assets/gifs/wind.gif",
+  pressure: "/assets/gifs/pressure.gif",
 };
 
 const WeatherCondition = Styled.div`
@@ -19,10 +19,15 @@ margin: 30px;
 
 const Condition = Styled.div`
 margin: 20px auto;
-font-size: 14px;
+font-size: 22px;
 & span {
     font-size: 20px;
 }
+`;
+
+const ConditionLabel = Styled.div`
+font-size: 13px;
+margin-top:4px;
 `;
 
 const LogoComponent = Styled.img`
@@ -32,9 +37,8 @@ margin: 5px auto
 `;
 
 const Location = Styled.span`
-font-size: 28px;
+font-size: 23px;
 font-weight: bold;
-
 `;
 
 const WeatherInfoLabel = Styled.span`
@@ -99,14 +103,20 @@ const WeatherComponent = (props) => {
     ).getMinutes()}`;
   };
 
+  const TempC = (temp) => {
+     return `${Math.floor(temp - 273)} °C`;
+  }
   return (
     <>
       <WeatherCondition>
         <Condition>
-          <span>{` ${Math.floor(weather?.main?.temp - 273)} °C`}</span>
+          <span>{` ${TempC(weather?.main?.temp)}`}</span>
           {`| ${weather?.weather[0].description}`}
+          <ConditionLabel>{`Feels Like: ${TempC(weather?.main?.feels_like)}`}</ConditionLabel>
+          <ConditionLabel>{`Temp Max: ${TempC(weather?.main?.temp_max)}`}</ConditionLabel>
+          <ConditionLabel>{`Temp Min: ${TempC(weather?.main?.temp_min)}`}</ConditionLabel>
         </Condition>
-        <LogoComponent src="/assets/animated/cloudy.svg"></LogoComponent>
+        <LogoComponent src={`http://openweathermap.org/img/wn/${weather?.weather[0].icon}@2x.png`}></LogoComponent>
       </WeatherCondition>
       <Location>{`${weather?.name}, ${weather?.sys?.country}`}</Location>
       <WeatherInfoLabel>Weather Info</WeatherInfoLabel>

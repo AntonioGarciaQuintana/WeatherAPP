@@ -20,22 +20,32 @@ display: flex;
 const AppLabel = Styled.span`
   color: black;
   margin: 20px auto;
-  font-size: 18px;
+  font-size: 30px;
   font-weight: bold;
 `;
 
 function App() {
   const [city, updateCity] = useState();
   const [weather, updateWeather] = useState();
+  const [errorMessage, updateErrorMessage] =  useState();
 
   const fetchWeather = async (e) => {
     e.preventDefault();
     const response = await axios.get(
       `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`
-    );
-      //console.log(response.data);
-    updateWeather(response.data);
+    ).catch( error => {
+      
+    });
+    
+    if(response){
+      updateWeather(response.data);
+    } else {
+      updateErrorMessage("The city was not found")
+    }
+    
   };
+
+
   return (
     <Container>
       <AppLabel>Weather APP</AppLabel>
@@ -44,6 +54,7 @@ function App() {
       ) : (
         <CityComponent
           updateCity={updateCity}
+          errorMessage={errorMessage}
           fetchWeather={fetchWeather}
         ></CityComponent>
       )}
